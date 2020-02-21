@@ -6,7 +6,11 @@ function Grafico(color, fString) {
     this.color=color;
     this.fString=fString;
     this.f= function(x){
-        return eval(this.fString);
+        try{
+            return eval(this.fString);
+        } catch(e){
+            console.log("Funzione non valida");
+        }
     };
 };
 
@@ -26,7 +30,7 @@ const ratio=width/height;
 //definizione variabili
 var currColor="#ff0000";
 var grafici=[];
-console.log(grafici.length);
+
 //Definisce l'intervallo in cui viene mostrato il grafico [-u; u]
 var initU=6.28;
 var u = initU;      
@@ -38,13 +42,6 @@ ctx.translate(tX, tY);
 ctx.translate(0.5, 0.5);
 
 //EVENTI
-//Zoom con slider
-slider.oninput = function() {
-    u=this.value/10+initU;
-    ctx.clearRect(-tX, -tY, width, height);
-    drawAxes();
-}
-
 lineColor.addEventListener('input', () => {
     console.log(lineColor.value);
     currColor=lineColor.value;
@@ -52,11 +49,27 @@ lineColor.addEventListener('input', () => {
         grafici[grafici.length-1].color=currColor;
 });
 
+//Zoom con rotella
+canv.addEventListener('wheel',function(event){
+    //Rotella su
+    if (event.deltaY < 0) {
+        u--;
+        ctx.clearRect(-tX, -tY, width, height);
+        drawAxes();
+    }
+    //Rotella giù
+    else if (event.deltaY > 0) {
+        u++;
+        ctx.clearRect(-tX, -tY, width, height);
+        drawAxes();
+    }
+    return false; 
+}, false);
+
+//Disegno di una nuova funzione
 function entryPoint(){
-    console.log("Iniziato");
     let func = document.getElementById("f-tbox").value;
     grafici.push(new Grafico(currColor, func));
-    console.log(grafici.length);
 }
 
 function drawAxes(){
@@ -93,8 +106,6 @@ function drawAxes(){
     }
     ctx.stroke();
     ctx.closePath();
-
-
 }
 
 
@@ -105,8 +116,6 @@ function drawGraph(){
         ctx.moveTo(-10000, 0);
         for(let i=-width/2; i<width/2; i++){
             let x=i*u/(width/2);
-            //console.log(x, f(x));
-            //console.log(i, -(f(x))*height/2);
             ctx.lineTo(i, -(grafici[j].f(x))*(width/(2*u)));
             ctx.stroke();
         }
@@ -114,6 +123,6 @@ function drawGraph(){
     }   
 }
 
-setInterval(drawGraph, 1000);
+setInterval(drawGraph, 1000/60);
 
 drawAxes();
