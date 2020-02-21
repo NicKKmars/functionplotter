@@ -1,10 +1,13 @@
 //Classi
 /*
-    Grafico(Colore linea, funzione grafico)
+    Grafico(Colore linea, stringa funzione)
 */
-function Grafico(color, f) {
+function Grafico(color, fString) {
     this.color=color;
-    this.f=f;
+    this.fString=fString;
+    this.f= function(x){
+        return eval(this.fString);
+    };
 };
 
 
@@ -51,9 +54,8 @@ lineColor.addEventListener('input', () => {
 
 function entryPoint(){
     console.log("Iniziato");
-    grfici.push(new Grafico(currColor, (x) => {
-        return (eval(document.getElementById("f-tbox").value));
-    }));
+    let func = document.getElementById("f-tbox").value;
+    grafici.push(new Grafico(currColor, func));
     console.log(grafici.length);
 }
 
@@ -97,11 +99,10 @@ function drawAxes(){
 
 
 function drawGraph(){
-    for(let j=1; j<grafici.length; j++){
-        console.log(grafici[j]);
+    for(let j=0; j<grafici.length; j++){
         ctx.beginPath();
         ctx.strokeStyle = grafici[j].color;
-        //ctx.moveTo(-10000, 0);
+        ctx.moveTo(-10000, 0);
         for(let i=-width/2; i<width/2; i++){
             let x=i*u/(width/2);
             //console.log(x, f(x));
@@ -113,6 +114,6 @@ function drawGraph(){
     }   
 }
 
-setInterval(drawGraph, 1000/60);
+setInterval(drawGraph, 1000);
 
 drawAxes();
