@@ -28,7 +28,7 @@ const height=canv.height;
 const ratio=width/height;
 
 //definizione variabili
-var currColor="#ff0000";
+var currColor=lineColor.value;
 var grafici=[];
 
 //Definisce l'intervallo in cui viene mostrato il grafico [-u; u]
