@@ -1,9 +1,13 @@
 //Pagina che consente la sperimentazione delle regex - da integrare con l'applicazione principale (app.js)
-function converti_funzione(){
-    var f = document.getElementById("f_input").value;
+function convert(){
+    f=document.getElementById("f_input").value;
+    f=exp_converter(f);
+    document.getElementById("output").innerHTML=f;
+}
 
-    //let p1=/\(?\w*\)?\^\(?\w*\)?/;
-    //let p2=/\b(?:(?! ).*)+\b/;
+//Conversione delle espressioni esponenziali contenute nella funzione in ingresso in elementi interpretabili in javascript
+function exp_converter(f){
+
     let p1 = /[a-zA-Z0-9()]*\^[a-zA-Z0-9()]*/;
 
     while(f.includes("^")){
@@ -32,9 +36,7 @@ function converti_funzione(){
         }
         f=f.replace(base+"^"+pow, "Math.pow("+base+","+pow+")");
     }
-    document.getElementById("f_input").value = f;
+    return f;
 }
 
 
-//Stringa con goose
-//f.replace(/\w*\^\w*/.exec(f),"Math.pow("+/\b(?:(?!goose)\w)+\b/.exec(f.split("^")[0])+","+/\w*/.exec(f.split("^")[1])+")");
