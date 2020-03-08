@@ -70,8 +70,9 @@ canv.addEventListener('wheel',function(event){
 function entryPoint(){
     let func = document.getElementById("f-tbox").value;
     //Elaborazione stringa in input dall'utente, la variabile locale func è quella da modificare, in modo
-    //che l'interprete di javascript sia in grado di calcolarne i valori
-    let p1=/\w*\^\w*/;
+    //che l'interprete di javascript sia in grado di calcolarne i valori, il tutto tramite 
+    //pattern (espressioni regolari/regex)
+    let p1=/\(?\w*\)?\^\(?\w*\)?/;
     let p2=/\b(?:(?! )\w)+\b/;
     let p3=/\w*/;
     func = func.replace(p1.exec(func),"Math.pow("+p2.exec(func.split("^")[0])+","+p3.exec(func.split("^")[1])+")");
