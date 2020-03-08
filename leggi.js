@@ -2,13 +2,36 @@
 function converti_funzione(){
     var f = document.getElementById("f_input").value;
 
-    let p1=/\(?\w*\)?\^\(?\w*\)?/;
+    //let p1=/\(?\w*\)?\^\(?\w*\)?/;
     //let p2=/\b(?:(?! ).*)+\b/;
-    
-    f = f.replace(p1.exec(f), (x) =>{
-        console.log(x);
-        return "Math.pow("+x.split("^")[0]+","+x.split("^")[1]+")";
-    });
+    let p1 = /[a-zA-Z0-9()]*\^[a-zA-Z0-9()]*/;
+
+    while(f.includes("^")){
+        let res = p1.exec(f).toString();
+        let base = res.split("^")[0];
+        let pow = res.split("^")[1];
+        if(base.includes(")") && !base.includes("(")){
+            let i = f.indexOf(base+"^")-1;
+            let ch = f.charAt(i);
+            while(ch!="("){
+                base = ch + base;
+                i--;
+                ch = f.charAt(i);
+            }
+            base = "("+base;
+        }
+        if(pow.includes("(") && !pow.includes(")")){
+            let i = f.indexOf("^"+pow)+3;
+            let ch = f.charAt(i);
+            while(ch!=")"){
+                pow = pow + ch;
+                i++;
+                ch = f.charAt(i);
+            }
+            pow = pow+")";
+        }
+        f=f.replace(base+"^"+pow, "Math.pow("+base+","+pow+")");
+    }
     document.getElementById("f_input").value = f;
 }
 
