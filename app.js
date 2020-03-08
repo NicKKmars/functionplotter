@@ -71,11 +71,35 @@ function entryPoint(){
     let func = document.getElementById("f-tbox").value;
     //Elaborazione stringa in input dall'utente, la variabile locale func è quella da modificare, in modo
     //che l'interprete di javascript sia in grado di calcolarne i valori, il tutto tramite 
-    //pattern (espressioni regolari/regex)
-    let p1=/\(?\w*\)?\^\(?\w*\)?/;
-    let p2=/\b(?:(?! )\w)+\b/;
-    let p3=/\w*/;
-    func = func.replace(p1.exec(func),"Math.pow("+p2.exec(func.split("^")[0])+","+p3.exec(func.split("^")[1])+")");
+    //pattern (espressioni regolari/regex) e manipolazione delle stringhe
+    let pattern = /[a-zA-Z0-9()]*\^[a-zA-Z0-9()]*/;
+
+    while(func.includes("^")){
+        let res = pattern.exec(func).toString();
+        let base = res.split("^")[0];
+        let pow = res.split("^")[1];
+        if(base.includes(")") && !base.includes("(")){
+            let i = func.indexOf(base+"^")-1;
+            let ch = func.charAt(i);
+            while(ch!="("){
+                base = ch + base;
+                i--;
+                ch = func.charAt(i);
+            }
+            base = "("+base;
+        }
+        if(pow.includes("(") && !pow.includes(")")){
+            let i = func.indexOf("^"+pow)+3;
+            let ch = func.charAt(i);
+            while(ch!=")"){
+                pow = pow + ch;
+                i++;
+                ch = func.charAt(i);
+            }
+            pow = pow+")";
+        }
+        func=func.replace(base+"^"+pow, "Math.pow("+base+","+pow+")");
+    }
     document.getElementById("f-tbox").value=func;
     grafici.push(new Grafico(currColor, func));
 }
