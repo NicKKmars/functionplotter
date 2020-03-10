@@ -48,7 +48,7 @@ function log_converter(f){
     let pattern_ln= /ln\(\w*\)/;
     while(f.includes("ln")){
         res = pattern_ln.exec(f);
-        f = f.replace(res,"Math.log"+/\(\w*\)/.exec(res.toString())+"/Math.log(Math.exp(1))");
+        f = f.replace(res,"Math.log"+/\(\w*\)/.exec(res.toString())+"/Math.log(Math.E");
     }
     return f;
 
