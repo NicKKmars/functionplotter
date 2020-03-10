@@ -147,8 +147,18 @@ function drawGraph(){
         ctx.strokeStyle = grafici[j].color;
         ctx.moveTo(-10000, 0);
         for(let i=-width/2; i<width/2; i++){
-            let x=i*u/(width/2);
-            ctx.lineTo(i, -(grafici[j].f(x))*(width/(2*u)));
+            let c=function(i){
+                return i*u/(width/2);
+            }
+            let r=function(x){
+                return -(grafici[j].f(x))*(width/(2*u));
+            }
+            
+            if(Math.abs(r(c(i)))==Infinity) {
+                ctx.moveTo(i+1, r(c(i+1)));
+            } else {
+                ctx.lineTo(i, r(c(i)));
+            }
             ctx.stroke();
         }
         ctx.closePath();
