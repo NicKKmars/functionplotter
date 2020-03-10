@@ -100,6 +100,13 @@ function entryPoint(){
         }
         func=func.replace(base+"^"+pow, "Math.pow("+base+","+pow+")");
     }
+    let pattern_log=  /log/g;
+    func = func.replace(pattern_log, "Math.log");
+    let pattern_ln= /ln\(\w*\)/;
+    while(func.includes("ln")){
+        res = pattern_ln.exec(func);
+        func = func.replace(res,"Math.log"+/\(\w*\)/.exec(res.toString())+"/Math.log(Math.E");
+    }
     document.getElementById("f-tbox").value=func;
     grafici.push(new Grafico(currColor, func));
 }
