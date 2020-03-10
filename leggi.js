@@ -2,6 +2,7 @@
 function convert(){
     f=document.getElementById("f_input").value;
     f=exp_converter(f);
+    f=log_converter(f);
     document.getElementById("output").innerHTML=f;
 }
 
@@ -40,3 +41,15 @@ function exp_converter(f){
 }
 
 
+function log_converter(f){
+    //trasformazione di log in Math.log
+    let pattern_log=  /log/g;
+    f = f.replace(pattern_log, "Math.log");
+    let pattern_ln= /ln\(\w*\)/;
+    while(f.includes("ln")){
+        res = pattern_ln.exec(f);
+        f = f.replace(res,"Math.log"+/\(\w*\)/.exec(res.toString())+"/Math.log(Math.E");
+    }
+    return f;
+
+}
