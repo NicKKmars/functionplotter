@@ -2,27 +2,35 @@
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     </head>
     <body>
+        <div class="wrap">
+
         <ul id="nav" class="navbar">
             <li class="li_nav"><a href="#">Function Plotter</a></li>
             <li class="li_nav" style="float:right"><a href="#">About</a></li>
         </ul>
-        <div style="display:inline;">
-            <div class="sidebar">
-                <div style="display: none;" class="slidecontainer">
-                    <input type="range" min="-100" max="100" value="0" class="slider" id="myRange">
+            <div style="display:block; width:100%; height: 92%;">
+                <div id="sidebar_id" class="sidebar">
+                    <div style="display: none;" class="slidecontainer">
+                        <input type="range" min="-100" max="100" value="0" class="slider" id="myRange">
+                    </div>
+                    <br>
+                    <input class="color_picker" type ="color" id="lineColor" value="#ff0000">
+                    <br>
+                    <input class="func_input" type="text" id="f-tbox" placeholder="inserire la funzione">
+                    <br>
+                    <button class="draw_button" onclick="entryPoint()">Disegna</button>    
                 </div>
-                <br>
-                <input class="color_picker" type ="color" id="lineColor" value="#ff0000">
-                <br>
-                <input class="func_input" type="text" id="f-tbox" placeholder="inserire la funzione">
-                <br>
-                <button class="draw_button" onclick="entryPoint()">Disegna</button>    
+                
+                <div id="canv_div" class="main">
+                    <canvas id="canv" width="1000" height="1000" style="border: solid 1px black"></canvas>
+                    
+                    
+                </div>  
             </div>
-            <div class="main">
-                <canvas id="canv" height="650" width="1200" style="border: solid 1px black"></canvas>
-            </div>  
         </div>
     </body>
     <script src="app.js">
