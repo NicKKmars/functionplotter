@@ -74,6 +74,7 @@ function entryPoint(){
     //pattern (espressioni regolari/regex) e manipolazione delle stringhe
     let pattern = /[a-zA-Z0-9()]*\^[a-zA-Z0-9()]*/;
 
+    //trasformazione degli esponenziali
     while(func.includes("^")){
         let res = pattern.exec(func).toString();
         let base = res.split("^")[0];
@@ -100,13 +101,33 @@ function entryPoint(){
         }
         func=func.replace(base+"^"+pow, "Math.pow("+base+","+pow+")");
     }
+
+    //trasformazione dei logaritmi
     let pattern_log=  /log/g;
     func = func.replace(pattern_log, "Math.log");
-    let pattern_ln= /ln\(.*\)/;
+
+    //trasformazione dei logaritmi in base naturale (e)
+    let pattern_ln= /ln\(\w*\)?/;
     while(func.includes("ln")){
         res = pattern_ln.exec(func);
-        func = func.replace(res,"(Math.log"+/\(.*\)/.exec(res.toString())+")/(Math.log(Math.E))");
+        if(res.toString().includes(")")){
+            func = func.replace(res,"(Math.log"+/\(.*\)/.exec(res.toString())+")/(Math.log(Math.E))");
+        }
+        else{
+            let i = func.indexOf(res.toString())+2;
+            let ch = func.charAt(i);
+            let replacement = "";
+            while(ch!=")"){
+                replacement=replacement+func.charAt(i);
+                i++;
+                ch = func.charAt(i);
+            }
+            replacement=replacement+")";
+            func = func.replace("ln"+replacement,"(Math.log"+replacement+")/(Math.log(Math.E))");
+        }
     }
+
+    //immissione funzione nel grafico
     grafici.push(new Grafico(currColor, func));
 }
 

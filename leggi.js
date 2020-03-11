@@ -45,11 +45,26 @@ function log_converter(f){
     //trasformazione di log in Math.log
     let pattern_log=  /log/g;
     f = f.replace(pattern_log, "Math.log");
-    let pattern_ln= /ln\(\w*\)/;
+
+    //trasformazione di ln utilizzando la formula del cambio di base dei logaritmi
+    let pattern_ln= /ln\(\w*\)?/;
     while(f.includes("ln")){
         res = pattern_ln.exec(f);
-        f = f.replace(res,"Math.log"+/\(\w*\)/.exec(res.toString())+"/Math.log(Math.E");
+        if(res.toString().includes(")")){
+            f = f.replace(res,"(Math.log"+/\(.*\)/.exec(res.toString())+")/(Math.log(Math.E))");
+        }
+        else{
+            let i = f.indexOf(res.toString())+2;
+            let ch = f.charAt(i);
+            let replacement = "";
+            while(ch!=")"){
+                replacement=replacement+f.charAt(i);
+                i++;
+                ch = f.charAt(i);
+            }
+            replacement=replacement+")";
+            f = f.replace("ln"+replacement,"(Math.log"+replacement+")/(Math.log(Math.E))");
+        }
     }
     return f;
-
 }
