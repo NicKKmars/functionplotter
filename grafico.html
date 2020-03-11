@@ -4,25 +4,25 @@
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
-	<div>
-        <ul>
-            <li><a href="#">Function Plotter</a></li>
-            <li style="float:right"><a href="#">About</a></li>
+        <ul id="nav" class="navbar">
+            <li class="li_nav"><a href="#">Function Plotter</a></li>
+            <li class="li_nav" style="float:right"><a href="#">About</a></li>
         </ul>
-		
-        <div class="main-div">
-            
-            <div style="background-color: #4CAF50;" class="func_input_div">
+        <div style="display:inline;">
+            <div class="sidebar">
                 <div style="display: none;" class="slidecontainer">
                     <input type="range" min="-100" max="100" value="0" class="slider" id="myRange">
                 </div>
-                <input type ="color" id="lineColor" value="#ff0000">
-                <input style="height:20px" type="text" id="f-tbox" placeholder="inserire la funzione">
-                <button onclick="entryPoint()">Disegna</button>
+                <br>
+                <input class="color_picker" type ="color" id="lineColor" value="#ff0000">
+                <br>
+                <input class="func_input" type="text" id="f-tbox" placeholder="inserire la funzione">
+                <br>
+                <button class="draw_button" onclick="entryPoint()">Disegna</button>    
+            </div>
+            <div class="main">
+                <canvas id="canv" height="650" width="1200" style="border: solid 1px black"></canvas>
             </div>  
-            <canvas id="canv" height="600" width="600" style="border: solid 1px black"></canvas>
-
-            
         </div>
     </body>
     <script src="app.js">
