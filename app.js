@@ -39,7 +39,6 @@ ctx.translate(0.5, 0.5);
 
 //EVENTI
 lineColor.addEventListener('input', () => {
-    console.log(lineColor.value);
     currColor=lineColor.value;
     if(grafici.length>0)
         grafici[grafici.length-1].color=currColor;
@@ -68,36 +67,7 @@ function entryPoint(){
     //Elaborazione stringa in input dall'utente, la variabile locale func è quella da modificare, in modo
     //che l'interprete di javascript sia in grado di calcolarne i valori, il tutto tramite 
     //pattern (espressioni regolari/regex) e manipolazione delle stringhe
-    let pattern = /[a-zA-Z0-9()]*\^[a-zA-Z0-9()]*/;
-
-    //trasformazione degli esponenziali
-    while(func.includes("^")){
-        let res = pattern.exec(func).toString();
-        let base = res.split("^")[0];
-        let pow = res.split("^")[1];
-        if(base.includes(")") && !base.includes("(")){
-            let i = func.indexOf(base+"^")-1;
-            let ch = func.charAt(i);
-            while(ch!="("){
-                base = ch + base;
-                i--;
-                ch = func.charAt(i);
-            }
-            base = "("+base;
-        }
-        if(pow.includes("(") && !pow.includes(")")){
-            let i = func.indexOf("^"+pow)+3;
-            let ch = func.charAt(i);
-            while(ch!=")"){
-                pow = pow + ch;
-                i++;
-                ch = func.charAt(i);
-            }
-            pow = pow+")";
-        }
-        func=func.replace(base+"^"+pow, "Math.pow("+base+","+pow+")");
-    }
-
+    func = func.replace(/\^/g, "**");
     //trasformazione dei logaritmi
     let pattern_log=  /log/g;
     func = func.replace(pattern_log, "Math.log");
@@ -123,7 +93,9 @@ function entryPoint(){
         }
     }
     console.log(func);
+    console.log("ciao");
     try{
+        let x=0;
         eval(func);
         //immissione funzione nel grafico
         grafici.push(new Grafico(currColor, func));
