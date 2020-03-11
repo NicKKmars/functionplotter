@@ -100,7 +100,6 @@ function entryPoint(){
         }
         func=func.replace(base+"^"+pow, "Math.pow("+base+","+pow+")");
     }
-    document.getElementById("f-tbox").value=func;
     grafici.push(new Grafico(currColor, func));
 }
 
