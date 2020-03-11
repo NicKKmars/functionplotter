@@ -6,11 +6,7 @@ function Grafico(color, fString) {
     this.color=color;
     this.fString=fString;
     this.f= function(x){
-        try{
-            return eval(this.fString);
-        } catch(e){
-            console.log("Funzione non valida");
-        }
+        return eval(this.fString);
     };
 };
 
@@ -126,9 +122,14 @@ function entryPoint(){
             func = func.replace("ln"+replacement,"(Math.log"+replacement+")/(Math.log(Math.E))");
         }
     }
-
-    //immissione funzione nel grafico
-    grafici.push(new Grafico(currColor, func));
+    console.log(func);
+    try{
+        eval(func);
+        //immissione funzione nel grafico
+        grafici.push(new Grafico(currColor, func));
+    } catch(e){
+        alert("La funzione inserita non è valida");
+    }
 }
 
 function drawAxes(){
