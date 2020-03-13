@@ -2,6 +2,14 @@
     margin:0;
     padding:0;
 }
+:root {
+    --navbar-ul-color: #000000;
+    --navbar-selection-color: #323232;
+    --sidebar-bg-color: #ffac41;
+    --inputs-transition-color: #ff1e56;
+    --inputs-border-color: #323232;
+    --inputs-text-color:white;
+}
 .main-div{
     display: inline-table;
     width: 100%;
@@ -12,7 +20,7 @@
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #333;
+    background-color: var(--navbar-ul-color);
 }
   
 .li_nav {
@@ -21,24 +29,29 @@
 
 .li_nav a {
     display: block;
-    color: white;
+    color: var(--inputs-text-color);
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    transition: all 0.2s ease 0s;
+
 }
   
 .li_nav a:hover {
-    background-color: #555;
+    transition: all 0.2s ease 0s;
+    padding: 14px 20px;
+    background-color: var(--navbar-selection-color);
 }
 
 
 .sidebar{
-    background-color: #888;
+    background-color: var(--sidebar-bg-color);
     width:15%;
     float:left;
     height:100%;
     text-align: center;
+    
 }
 .main{
     width:83.5%; 
@@ -46,19 +59,53 @@
     margin-left: 15.5%;
 }
 .color_picker{
-    width:90%;
+    width:30px;
+    height: 33px;
     border:none;
+    background: none;
 }
+.color_table{
+    margin-top: 1rem;
+    width:90%;
+    text-align: center;
+}
+
 .func_input{
     margin-top: 1rem;
     width:90%;
+    text-align: center;
     height: 30px;
+    background: none;
+    border: 2px solid var(--inputs-border-color);
+    transition: all 0.4s ease 0s;
+
 
 }
+.func_input:hover{
+    color: var(--inputs-text-color);
+    background: var(--inputs-transition-color);
+    border-color: var(--inputs-transition-color);
+    transition: all 0.4s ease 0s;
+}
 .draw_button{
+    color: var(--inputs-border-color);
+    text-transform: uppercase;
+    text-decoration: none;
+    background: none;
+    border: 2px solid var(--inputs-border-color);
+    display: inline-block;
+    transition: all 0.4s ease 0s;
     margin-top: 1rem;
     width:90%;
     height: 40px;
+    outline: none;
+    cursor: pointer;
+}
+.draw_button:hover{
+    color: var(--inputs-text-color);
+    background: var(--inputs-transition-color);
+    border-color: var(--inputs-transition-color);
+    transition: all 0.4s ease 0s;
 }
 .wrap{
     width: 100%;

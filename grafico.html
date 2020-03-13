@@ -18,23 +18,31 @@
             </li>
         </ul>
             <div style="display:block; width:100%; height: 90%;">
+
                 <div id="sidebar_id" class="sidebar">
+                    <input class="func_input" type="text" id="f-tbox" placeholder="inserire la funzione">
+                    <br>
+                    <button class="draw_button" onclick="entryPoint()">Disegna</button>    
                     <div style="display: none;" class="slidecontainer">
                         <input type="range" min="-100" max="100" value="0" class="slider" id="myRange">
                     </div>
                     <br>
-                    <input class="color_picker" type ="color" id="lineColor" value="#ff0000">
-                    <br>
-                    <input class="func_input" type="text" id="f-tbox" placeholder="inserire la funzione">
-                    <br>
-                    <button class="draw_button" oncl -mick="entryPoint()">Disegna</button>    
+                    <table class="color_table">
+                        <tr>
+                            <td>
+                                <p style="font-size:15px;">scegli un colore:</p>
+                            </td>
+                            <td>
+                                <input class="color_picker" type ="color" id="lineColor" value="#ff0000">
+                            </td>
+                        </tr>
+                    </table>
                 </div>
                 
                 <div id="canv_div" class="main">
                     <canvas id="canv" width="1000" height="1000" style="border: solid 1px black"></canvas>
-                    
-                    
                 </div>  
+
             </div>
         </div>
     </body>
