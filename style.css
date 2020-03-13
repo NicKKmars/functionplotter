@@ -2,6 +2,9 @@
     margin:0;
     padding:0;
 }
+html, body{
+    font-family:Verdana,sans-serif;
+}
 :root {
     --navbar-ul-color: #000000;
     --navbar-selection-color: #323232;
